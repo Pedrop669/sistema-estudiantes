@@ -4,35 +4,45 @@ import java.math.BigDecimal;
 
 public class Producto {
 
-    private int id;
+    private Long idProducto;
     private String codigo;
     private String nombre;
     private String descripcion;
     private BigDecimal precioVenta;
-    private int stockActual;
-    private int stockMinimo;
-    private boolean activo = true;
+    private Integer stockActual;
+    private Integer stockMinimo;
+    private Boolean activo;
 
-    public Producto() {}
+    public Producto() {
+    }
 
-    public Producto(String codigo, String nombre, String descripcion,
-                    BigDecimal precioVenta, int stockActual, int stockMinimo) {
+    public Producto(Long idProducto, String codigo, String nombre,
+                    String descripcion, BigDecimal precioVenta,
+                    Integer stockActual, Integer stockMinimo,
+                    Boolean activo) {
+        this.idProducto = idProducto;
         this.codigo = codigo;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.precioVenta = precioVenta;
         this.stockActual = stockActual;
         this.stockMinimo = stockMinimo;
+        this.activo = activo;
     }
 
-    public BigDecimal obtenerPrecio() { return precioVenta; }
-
-    public int getId() {
-        return id;
+    public void actualizarStock() {
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public BigDecimal obtenerPrecio() {
+        return precioVenta;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
     public String getCodigo() {
@@ -67,30 +77,27 @@ public class Producto {
         this.precioVenta = precioVenta;
     }
 
-    public int getStockActual() {
+    public Integer getStockActual() {
         return stockActual;
     }
 
-    public void setStockActual(int stockActual) {
+    public void setStockActual(Integer stockActual) {
         this.stockActual = stockActual;
     }
 
-    public int getStockMinimo() {
+    public Integer getStockMinimo() {
         return stockMinimo;
     }
 
-    public void setStockMinimo(int stockMinimo) {
+    public void setStockMinimo(Integer stockMinimo) {
         this.stockMinimo = stockMinimo;
     }
 
-    public boolean isActivo() {
+    public Boolean getActivo() {
         return activo;
     }
 
-    public void setActivo(boolean activo) {
+    public void setActivo(Boolean activo) {
         this.activo = activo;
     }
-
-    @Override
-    public String toString() { return codigo + " - " + nombre; }
 }
