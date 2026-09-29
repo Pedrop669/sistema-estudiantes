@@ -4,22 +4,25 @@ import java.time.LocalDateTime;
 
 public class MovimientoInventario {
 
-    private int id;
-    private int idProducto;
+    private Long idMovimiento;
     private LocalDateTime fecha;
     private TipoMovimiento tipo;
-    private Long referenciaId;      // id de la compra/venta/despacho que lo origino
-    private String referenciaTipo;  // "COMPRA", "ORDEN_VENTA", etc.
-    private int cantidad;
-    private int stockAnterior;
-    private int stockNuevo;
+    private Long referenciaId;
+    private String referenciaTipo;
+    private Integer cantidad;
+    private Integer stockAnterior;
+    private Integer stockNuevo;
     private String observaciones;
 
-    public MovimientoInventario() {}
+    public MovimientoInventario() {
+    }
 
-    public MovimientoInventario(int id, int idProducto, LocalDateTime fecha, TipoMovimiento tipo, Long referenciaId, String referenciaTipo, int cantidad, int stockAnterior, int stockNuevo, String observaciones) {
-        this.id = id;
-        this.idProducto = idProducto;
+    public MovimientoInventario(Long idMovimiento, LocalDateTime fecha,
+                                TipoMovimiento tipo, Long referenciaId,
+                                String referenciaTipo, Integer cantidad,
+                                Integer stockAnterior, Integer stockNuevo,
+                                String observaciones) {
+        this.idMovimiento = idMovimiento;
         this.fecha = fecha;
         this.tipo = tipo;
         this.referenciaId = referenciaId;
@@ -30,20 +33,12 @@ public class MovimientoInventario {
         this.observaciones = observaciones;
     }
 
-    public int getId() {
-        return id;
+    public Long getIdMovimiento() {
+        return idMovimiento;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getIdProducto() {
-        return idProducto;
-    }
-
-    public void setIdProducto(int idProducto) {
-        this.idProducto = idProducto;
+    public void setIdMovimiento(Long idMovimiento) {
+        this.idMovimiento = idMovimiento;
     }
 
     public LocalDateTime getFecha() {
@@ -78,27 +73,27 @@ public class MovimientoInventario {
         this.referenciaTipo = referenciaTipo;
     }
 
-    public int getCantidad() {
+    public Integer getCantidad() {
         return cantidad;
     }
 
-    public void setCantidad(int cantidad) {
+    public void setCantidad(Integer cantidad) {
         this.cantidad = cantidad;
     }
 
-    public int getStockAnterior() {
+    public Integer getStockAnterior() {
         return stockAnterior;
     }
 
-    public void setStockAnterior(int stockAnterior) {
+    public void setStockAnterior(Integer stockAnterior) {
         this.stockAnterior = stockAnterior;
     }
 
-    public int getStockNuevo() {
+    public Integer getStockNuevo() {
         return stockNuevo;
     }
 
-    public void setStockNuevo(int stockNuevo) {
+    public void setStockNuevo(Integer stockNuevo) {
         this.stockNuevo = stockNuevo;
     }
 
