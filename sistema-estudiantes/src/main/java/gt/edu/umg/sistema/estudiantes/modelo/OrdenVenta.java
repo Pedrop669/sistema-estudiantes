@@ -4,7 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class OrdenVenta {
-
+    private Long idCliente;
+    private Long idVendedor;
     private Long idOrdenVenta;
     private LocalDateTime fecha;
     private EstadoOrdenVenta estado;
@@ -35,6 +36,22 @@ public class OrdenVenta {
 
     public void cambiarEstado() {
         // Método definido en el diagrama.
+    }
+
+    public Long getIdCliente() {
+        return idCliente;
+    }
+
+    public void setIdCliente(Long idCliente) {
+        this.idCliente = idCliente;
+    }
+
+    public Long getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(Long idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
     public Long getIdOrdenVenta() {

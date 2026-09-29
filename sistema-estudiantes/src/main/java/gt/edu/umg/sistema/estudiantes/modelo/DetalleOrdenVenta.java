@@ -3,7 +3,8 @@ package gt.edu.umg.sistema.estudiantes.modelo;
 import java.math.BigDecimal;
 
 public class DetalleOrdenVenta {
-
+    private Long idOrdenVenta;
+    private Long idProducto;
     private Long idDetalle;
     private Integer cantidad;
     private BigDecimal precioUnitario;
@@ -27,6 +28,22 @@ public class DetalleOrdenVenta {
 
     public void calcularSubtotal() {
         // Método definido en el diagrama.
+    }
+
+    public Long getIdOrdenVenta() {
+        return idOrdenVenta;
+    }
+
+    public void setIdOrdenVenta(Long idOrdenVenta) {
+        this.idOrdenVenta = idOrdenVenta;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
     public Long getIdDetalle() {

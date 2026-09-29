@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class Compra {
-
+    private Long idProveedor;
     private Long idCompra;
     private LocalDateTime fecha;
     private Proveedor proveedor;
@@ -28,6 +28,14 @@ public class Compra {
     }
 
     public void cambiarEstado() {
+    }
+
+    public Long getIdProveedor() {
+        return idProveedor;
+    }
+
+    public void setIdProveedor(Long idProveedor) {
+        this.idProveedor = idProveedor;
     }
 
     public Long getIdCompra() {

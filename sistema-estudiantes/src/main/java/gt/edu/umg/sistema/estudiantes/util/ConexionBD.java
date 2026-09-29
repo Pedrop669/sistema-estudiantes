@@ -18,7 +18,7 @@ public class ConexionBD {
 
     /** Metodo rapido para probar que la conexion funciona. */
     public static void main(String[] args) {
-        try (Connection con = getConexion()) {
+        try (Connection con =   getConexion()) {
             System.out.println("Conexion exitosa a: " + con.getCatalog());
         } catch (SQLException e) {
             System.out.println("ERROR de conexion: " + e.getMessage());

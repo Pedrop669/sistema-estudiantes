@@ -7,7 +7,7 @@ public class Proveedor {
     private String nombreComercial;
     private String contacto;
     private String telefono;
-    private String correoElectronico;
+    private String email;
     private String direccion;
     private Boolean activo;
 
@@ -16,7 +16,7 @@ public class Proveedor {
 
     public Proveedor(Long idProveedor, String nit, String nombreComercial,
                      String contacto, String telefono,
-                     String correoElectronico, String direccion,
+                     String email, String direccion,
                      Boolean activo) {
 
         this.idProveedor = idProveedor;
@@ -24,7 +24,7 @@ public class Proveedor {
         this.nombreComercial = nombreComercial;
         this.contacto = contacto;
         this.telefono = telefono;
-        this.correoElectronico = correoElectronico;
+        this.email = email;
         this.direccion = direccion;
         this.activo = activo;
     }
@@ -69,12 +69,12 @@ public class Proveedor {
         this.telefono = telefono;
     }
 
-    public String getCorreoElectronico() {
-        return correoElectronico;
+    public String getEmail() {
+        return email;
     }
 
-    public void setCorreoElectronico(String correoElectronico) {
-        this.correoElectronico = correoElectronico;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getDireccion() {
