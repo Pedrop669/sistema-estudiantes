@@ -33,6 +33,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         saveMenuItem = new javax.swing.JMenuItem();
         saveAsMenuItem = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
+        Clientes = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -46,6 +48,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
+        fileMenu.addActionListener(this::fileMenuActionPerformed);
 
         openMenuItem.setMnemonic('o');
         openMenuItem.setText("Open");
@@ -65,6 +68,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         exitMenuItem.setText("Exit");
         exitMenuItem.addActionListener(this::exitMenuItemActionPerformed);
         fileMenu.add(exitMenuItem);
+
+        Clientes.setText("Clientes");
+        Clientes.addActionListener(this::ClientesActionPerformed);
+        fileMenu.add(Clientes);
+
+        jMenuItem2.setText("Vendedores");
+        jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
+        fileMenu.add(jMenuItem2);
 
         menuBar.add(fileMenu);
 
@@ -124,10 +135,27 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
 
     private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
         // TODO add your handling code here:
-       FrmEstudiantes frm = new FrmEstudiantes();
+       FrmCliente frm = new FrmCliente();
        desktopPane.add(frm);
        frm.setVisible(true);
     }//GEN-LAST:event_openMenuItemActionPerformed
+
+    private void ClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClientesActionPerformed
+FrmClienteGUI frm = new FrmClienteGUI();
+desktopPane.add(frm);
+frm.setVisible(true);        // TODO add your handling code here:
+    }//GEN-LAST:event_ClientesActionPerformed
+
+    private void fileMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fileMenuActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_fileMenuActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        FrmVendedor frm = new FrmVendedor();
+        desktopPane.add(frm);
+        frm.toFront();
+        frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,6 +193,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem Clientes;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JMenuItem contentMenuItem;
     private javax.swing.JMenuItem copyMenuItem;
@@ -175,6 +204,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;

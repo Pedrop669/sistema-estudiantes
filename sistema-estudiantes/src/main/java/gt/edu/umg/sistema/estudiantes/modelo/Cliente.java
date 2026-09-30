@@ -15,7 +15,6 @@ public class Cliente extends Persona {
 
     public Cliente(Long idCliente, String codigoCliente,
                    BigDecimal limiteCredito, Boolean activo) {
-
         super();
         this.idCliente = idCliente;
         this.codigoCliente = codigoCliente;
@@ -24,7 +23,6 @@ public class Cliente extends Persona {
     }
 
     public void validarCredito(BigDecimal monto) {
-        // Método definido en el diagrama.
     }
 
     public Long getIdCliente() {
