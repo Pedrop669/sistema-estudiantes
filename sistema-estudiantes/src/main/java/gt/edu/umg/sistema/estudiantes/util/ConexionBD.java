@@ -10,7 +10,7 @@ public class ConexionBD {
         "jdbc:mysql://localhost:3306/sistema_ventas"
         + "?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=America/Guatemala";
     private static final String USUARIO = "root";
-    private static final String CLAVE   = "";
+    private static final String CLAVE   = "root123";
 
     public static Connection getConexion() throws SQLException {
         return DriverManager.getConnection(URL, USUARIO, CLAVE);

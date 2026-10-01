@@ -17,6 +17,7 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
             con = ConexionBD.getConexion();
             con.setAutoCommit(false);
 
+            // 1. insertar cabecera
             long idOrden;
             try (PreparedStatement ps = con.prepareStatement(sqlOV, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setTimestamp(1, Timestamp.valueOf(o.getFecha()));
@@ -30,8 +31,8 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
             }
             o.setIdOrdenVenta(idOrden);
 
-            // insertar detalles y descontar stock
-            ProductoDAO prodDAO = new ProductoDAOImpl();
+            // 2. insertar detalles y descontar stock, TODO en la MISMA conexion/transaccion
+            ProductoDAOImpl prodDAO = new ProductoDAOImpl();
             for (DetalleOrdenVenta d : detalles) {
                 try (PreparedStatement ps = con.prepareStatement(sqlDet)) {
                     ps.setLong(1, idOrden);
@@ -42,8 +43,9 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
                     ps.setBigDecimal(6, d.getSubtotal());
                     ps.executeUpdate();
                 }
-                // descontar stock y registrar movimiento
-                prodDAO.ajustarStock(d.getIdProducto().intValue(), TipoMovimiento.VENTA,
+                // descontar stock y registrar movimiento, usando la MISMA "con"
+                // (evita el bloqueo cruzado entre dos conexiones distintas)
+                prodDAO.ajustarStock(con, d.getIdProducto().intValue(), TipoMovimiento.VENTA,
                         d.getCantidad(), idOrden, "ORDEN_VENTA", "Venta orden #" + idOrden);
             }
             con.commit();

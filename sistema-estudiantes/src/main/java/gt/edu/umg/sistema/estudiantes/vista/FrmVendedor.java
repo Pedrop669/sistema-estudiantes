@@ -1,27 +1,23 @@
 package gt.edu.umg.sistema.estudiantes.vista;
 
+import gt.edu.umg.sistema.estudiantes.controlador.VendedorController;
+import gt.edu.umg.sistema.estudiantes.modelo.Vendedor;
+import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class FrmVendedor extends javax.swing.JInternalFrame {
 
-    DefaultTableModel modeloTabla;
+    VendedorController controller = new VendedorController();
 
     public FrmVendedor() {
         initComponents();
-        prepararTabla();
+        refrescarTabla();
     }
 
-    private void prepararTabla() {
-        modeloTabla = new DefaultTableModel();
-        modeloTabla.addColumn("ID");
-        modeloTabla.addColumn("Código");
-        modeloTabla.addColumn("Nombre");
-        modeloTabla.addColumn("Teléfono");
-        tablaVendedores.setModel(modeloTabla);
-    }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
@@ -111,27 +107,79 @@ public class FrmVendedor extends javax.swing.JInternalFrame {
         );
 
         pack();
-    }// </editor-fold>                        
+    }// </editor-fold>
 
-    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        String id = txtId.getText().trim();
-        String codigo = txtCodigo.getText().trim();
-        String nombre = txtNombre.getText().trim();
-        String telefono = txtTelefono.getText().trim();
+    public void refrescarTabla() {
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID");
+        model.addColumn("Código");
+        model.addColumn("Nombre");
+        model.addColumn("Teléfono");
 
-        if (nombre.isEmpty()) {
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor ingrese al menos el nombre.");
-            return;
+        List<Vendedor> vendedores = controller.getVendedores();
+        for (Vendedor v : vendedores) {
+            Object[] fila = new Object[4];
+            fila[0] = v.getIdVendedor();
+            fila[1] = v.getCodigoVendedor();
+            fila[2] = v.getNombres();
+            fila[3] = v.getTelefono();
+            model.addRow(fila);
         }
+        tablaVendedores.setModel(model);
+    }
 
-        modeloTabla.addRow(new Object[]{id.isEmpty() ? "Auto" : id, codigo, nombre, telefono});
+    private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {
+        try {
+            String id = txtId.getText().trim();
+            String codigo = txtCodigo.getText().trim();
+            String nombre = txtNombre.getText().trim();
+            String telefono = txtTelefono.getText().trim();
 
-        txtId.setText("");
-        txtCodigo.setText("");
-        txtNombre.setText("");
-        txtTelefono.setText("");
-        javax.swing.JOptionPane.showMessageDialog(this, "Vendedor grabado con éxito.");
-    }                                        
+            if (nombre.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Por favor ingrese al menos el nombre.");
+                return;
+            }
+
+            Vendedor vendedor = new Vendedor();
+            if (!id.isEmpty()) {
+                vendedor.setIdVendedor(Long.parseLong(id));
+            }
+            vendedor.setCodigoVendedor(codigo);
+            vendedor.setNombres(nombre);
+            vendedor.setApellidos("");
+            vendedor.setTelefono(telefono);
+            vendedor.setTipoDocumento("DPI");
+            vendedor.setNumeroDocumento("");
+            vendedor.setZona("");
+            vendedor.setActivo(true);
+
+            if (vendedor.getIdVendedor() == null) {
+                controller.guardar(vendedor);
+            } else {
+                controller.actualizar(vendedor);
+            }
+
+            JOptionPane.showMessageDialog(this, "Vendedor grabado con éxito.");
+
+            txtId.setText("");
+            txtCodigo.setText("");
+            txtNombre.setText("");
+            txtTelefono.setText("");
+
+            refrescarTabla();
+
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this,
+                    "El campo ID debe ser numérico.",
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                    "Error al guardar: " + e.getMessage(),
+                    "Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton btnGrabar;

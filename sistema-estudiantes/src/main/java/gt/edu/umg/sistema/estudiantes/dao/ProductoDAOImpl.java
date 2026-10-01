@@ -158,12 +158,23 @@ public class ProductoDAOImpl implements ProductoDAO {
         }
     }
 
+    /**
+     * Version STANDALONE: abre su propia conexion/transaccion, hace
+     * commit/rollback y cierra. Usar SOLO cuando no hay una transaccion
+     * mas grande en curso (ej. un ajuste manual de stock aislado).
+     *
+     * IMPORTANTE: si este metodo se llama DESDE DENTRO de otra transaccion
+     * que ya esta tocando la tabla producto (como OrdenVentaDAOImpl o
+     * CompraDAOImpl guardando una orden), NO USAR ESTA VERSION. Usar la
+     * sobrecarga ajustarStock(Connection, ...) de abajo, que reutiliza la
+     * conexion del caller. Si se usa esta version standalone dentro de otra
+     * transaccion sin terminar, se genera un bloqueo cruzado entre
+     * conexiones (Lock wait timeout exceeded).
+     */
     @Override
     public void ajustarStock(int idProducto, TipoMovimiento tipo, int cantidad,
                              Long referenciaId, String referenciaTipo,
                              String observaciones) {
-
-        int delta = signo(tipo);
 
         Connection con = null;
 
@@ -171,73 +182,8 @@ public class ProductoDAOImpl implements ProductoDAO {
             con = ConexionBD.getConexion();
             con.setAutoCommit(false);
 
-            int stockAnterior;
-
-            try (PreparedStatement ps = con.prepareStatement(
-                    "SELECT stock_actual FROM producto " +
-                    "WHERE id_producto=? FOR UPDATE")) {
-
-                ps.setInt(1, idProducto);
-
-                try (ResultSet rs = ps.executeQuery()) {
-
-                    if (!rs.next()) {
-                        throw new SQLException(
-                                "Producto no existe: " + idProducto);
-                    }
-
-                    stockAnterior = rs.getInt(1);
-                }
-            }
-
-            int stockNuevo = stockAnterior + (delta * cantidad);
-
-            if (stockNuevo < 0) {
-                throw new IllegalStateException(
-                        "Stock insuficiente. Actual: "
-                        + stockAnterior
-                        + ", solicitado: "
-                        + cantidad);
-            }
-
-            try (PreparedStatement ps = con.prepareStatement(
-                    "UPDATE producto SET stock_actual=? " +
-                    "WHERE id_producto=?")) {
-
-                ps.setInt(1, stockNuevo);
-                ps.setInt(2, idProducto);
-                ps.executeUpdate();
-            }
-
-            String insMov = """
-                INSERT INTO movimiento_inventario
-                    (id_producto, fecha, tipo, referencia_id, referencia_tipo,
-                     cantidad, stock_anterior, stock_nuevo, observaciones)
-                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
-                """;
-
-            try (PreparedStatement ps = con.prepareStatement(insMov)) {
-
-                ps.setInt(1, idProducto);
-                ps.setTimestamp(
-                        2,
-                        Timestamp.valueOf(LocalDateTime.now()));
-                ps.setString(3, tipo.name());
-
-                if (referenciaId != null) {
-                    ps.setLong(4, referenciaId);
-                } else {
-                    ps.setNull(4, Types.BIGINT);
-                }
-
-                ps.setString(5, referenciaTipo);
-                ps.setInt(6, cantidad);
-                ps.setInt(7, stockAnterior);
-                ps.setInt(8, stockNuevo);
-                ps.setString(9, observaciones);
-
-                ps.executeUpdate();
-            }
+            ajustarStock(con, idProducto, tipo, cantidad,
+                    referenciaId, referenciaTipo, observaciones);
 
             con.commit();
 
@@ -264,6 +210,90 @@ public class ProductoDAOImpl implements ProductoDAO {
                     // No hacer nada
                 }
             }
+        }
+    }
+
+    /**
+     * Version para TRANSACCION COMPARTIDA: usa la conexion que le pasa el
+     * caller (no abre, no hace commit, no cierra). El caller (por ejemplo
+     * OrdenVentaDAOImpl.guardar o CompraDAOImpl.guardar) es responsable de
+     * manejar con.setAutoCommit(false), con.commit() y con.close().
+     *
+     * Esta es la version que SIEMPRE debe usarse cuando el ajuste de stock
+     * ocurre como parte de guardar una orden de venta o una compra, para
+     * evitar bloqueos cruzados entre dos conexiones distintas tocando la
+     * misma fila de producto al mismo tiempo.
+     */
+    public void ajustarStock(Connection con, int idProducto, TipoMovimiento tipo,
+                             int cantidad, Long referenciaId, String referenciaTipo,
+                             String observaciones) throws SQLException {
+
+        int delta = signo(tipo);
+
+        int stockAnterior;
+
+        try (PreparedStatement ps = con.prepareStatement(
+                "SELECT stock_actual FROM producto " +
+                "WHERE id_producto=? FOR UPDATE")) {
+
+            ps.setInt(1, idProducto);
+
+            try (ResultSet rs = ps.executeQuery()) {
+
+                if (!rs.next()) {
+                    throw new SQLException(
+                            "Producto no existe: " + idProducto);
+                }
+
+                stockAnterior = rs.getInt(1);
+            }
+        }
+
+        int stockNuevo = stockAnterior + (delta * cantidad);
+
+        if (stockNuevo < 0) {
+            throw new IllegalStateException(
+                    "Stock insuficiente. Actual: "
+                    + stockAnterior
+                    + ", solicitado: "
+                    + cantidad);
+        }
+
+        try (PreparedStatement ps = con.prepareStatement(
+                "UPDATE producto SET stock_actual=? " +
+                "WHERE id_producto=?")) {
+
+            ps.setInt(1, stockNuevo);
+            ps.setInt(2, idProducto);
+            ps.executeUpdate();
+        }
+
+        String insMov = """
+            INSERT INTO movimiento_inventario
+                (id_producto, fecha, tipo, referencia_id, referencia_tipo,
+                 cantidad, stock_anterior, stock_nuevo, observaciones)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)
+            """;
+
+        try (PreparedStatement ps = con.prepareStatement(insMov)) {
+
+            ps.setInt(1, idProducto);
+            ps.setTimestamp(2, Timestamp.valueOf(LocalDateTime.now()));
+            ps.setString(3, tipo.name());
+
+            if (referenciaId != null) {
+                ps.setLong(4, referenciaId);
+            } else {
+                ps.setNull(4, Types.BIGINT);
+            }
+
+            ps.setString(5, referenciaTipo);
+            ps.setInt(6, cantidad);
+            ps.setInt(7, stockAnterior);
+            ps.setInt(8, stockNuevo);
+            ps.setString(9, observaciones);
+
+            ps.executeUpdate();
         }
     }
 

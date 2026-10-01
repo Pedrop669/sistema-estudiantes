@@ -38,6 +38,7 @@ gt\edu\umg\sistema\estudiantes\dao\ProductoDAO.class
 gt\edu\umg\sistema\estudiantes\modelo\EstadoCompra.class
 gt\edu\umg\sistema\estudiantes\dao\CompraDAO.class
 gt\edu\umg\sistema\estudiantes\modelo\OrdenDespacho.class
+gt\edu\umg\sistema\estudiantes\vista\FrmOrdenVenta.class
 gt\edu\umg\sistema\estudiantes\controlador\ClienteController.class
 gt\edu\umg\sistema\estudiantes\modelo\DetalleOrdenVenta.class
 gt\edu\umg\sistema\estudiantes\dao\ProductoDAOImpl$1.class

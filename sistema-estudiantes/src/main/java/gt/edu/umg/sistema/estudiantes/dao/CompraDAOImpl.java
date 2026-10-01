@@ -28,7 +28,7 @@ public class CompraDAOImpl implements CompraDAO {
             }
             c.setIdCompra(idCompra);
 
-            ProductoDAO prodDAO = new ProductoDAOImpl();
+            ProductoDAOImpl prodDAO = new ProductoDAOImpl();
             for (DetalleCompra d : detalles) {
                 try (PreparedStatement ps = con.prepareStatement(sqlDet)) {
                     ps.setLong(1, idCompra);
@@ -38,8 +38,8 @@ public class CompraDAOImpl implements CompraDAO {
                     ps.setBigDecimal(5, d.getSubtotal());
                     ps.executeUpdate();
                 }
-                // aumentar stock y registrar movimiento
-                prodDAO.ajustarStock(d.getIdProducto().intValue(), TipoMovimiento.COMPRA,
+                // aumentar stock y registrar movimiento, usando la MISMA "con"
+                prodDAO.ajustarStock(con, d.getIdProducto().intValue(), TipoMovimiento.COMPRA,
                         d.getCantidad(), idCompra, "COMPRA", "Compra #" + idCompra);
             }
             con.commit();
