@@ -15,6 +15,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
      */
     public FrmMenuPrincipal() {
         initComponents();
+        setSize(1000, 700);
+        setLocationRelativeTo(null);
     }
 
     /**
@@ -35,6 +37,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         exitMenuItem = new javax.swing.JMenuItem();
         Clientes = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
+        mnuProductos = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -76,6 +79,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem2.setText("Vendedores");
         jMenuItem2.addActionListener(this::jMenuItem2ActionPerformed);
         fileMenu.add(jMenuItem2);
+
+        mnuProductos.setText("Productos");
+        mnuProductos.addActionListener(this::mnuProductosActionPerformed);
+        fileMenu.add(mnuProductos);
 
         menuBar.add(fileMenu);
 
@@ -141,7 +148,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_openMenuItemActionPerformed
 
     private void ClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ClientesActionPerformed
-FrmClienteGUI frm = new FrmClienteGUI();
+FrmCliente frm = new FrmCliente();
 desktopPane.add(frm);
 frm.setVisible(true);        // TODO add your handling code here:
     }//GEN-LAST:event_ClientesActionPerformed
@@ -156,6 +163,14 @@ frm.setVisible(true);        // TODO add your handling code here:
         frm.toFront();
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void mnuProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProductosActionPerformed
+        // TODO add your handling code here:
+        FrmProducto frm = new FrmProducto();
+        desktopPane.add(frm);
+        frm.toFront();
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuProductosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -206,6 +221,7 @@ frm.setVisible(true);        // TODO add your handling code here:
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mnuProductos;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
     private javax.swing.JMenuItem saveAsMenuItem;

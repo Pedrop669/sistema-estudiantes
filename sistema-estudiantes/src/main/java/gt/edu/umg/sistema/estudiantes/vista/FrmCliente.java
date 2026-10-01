@@ -111,59 +111,62 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>                        
 
-    private void BtnGrabarActionPerformed(java.awt.event.ActionEvent evt) {                                          
-        try {
-            Cliente cliente = new Cliente();
+    private void BtnGrabarActionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+        Cliente cliente = new Cliente();
 
-            if (!txtId.getText().trim().isEmpty()) {
-                cliente.setIdCliente(Long.parseLong(txtId.getText().trim()));
-            }
-            cliente.setNombres(txtNombre.getText().trim());
-            cliente.setApellidos(txtNit.getText().trim());
-            cliente.setEmail(txtTelefono.getText().trim());
-
-            controller.guardar(cliente);
-
-            JOptionPane.showMessageDialog(this, "Cliente grabado con éxito.");
-
-            txtId.setText("");
-            txtNombre.setText("");
-            txtNit.setText("");
-            txtTelefono.setText("");
-
-            refrescarTabla();
-
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, 
-                "El campo ID debe ser numérico.", 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, 
-                "Error al guardar: " + e.getMessage(), 
-                "Error", 
-                JOptionPane.ERROR_MESSAGE);
+        if (!txtId.getText().trim().isEmpty()) {
+            cliente.setIdCliente(Long.parseLong(txtId.getText().trim()));
         }
-    }                                         
+        cliente.setTipoDocumento("NIT");
+        cliente.setNumeroDocumento(txtNit.getText().trim());
+        cliente.setNombres(txtNombre.getText().trim());
+        cliente.setApellidos(""); // el formulario no captura apellidos por ahora
+        cliente.setTelefono(txtTelefono.getText().trim());
+        cliente.setActivo(true);
+
+        controller.guardar(cliente);
+
+        JOptionPane.showMessageDialog(this, "Cliente grabado con éxito.");
+
+        txtId.setText("");
+        txtNombre.setText("");
+        txtNit.setText("");
+        txtTelefono.setText("");
+
+        refrescarTabla();
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this,
+            "El campo ID debe ser numérico.",
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this,
+            "Error al guardar: " + e.getMessage(),
+            "Error",
+            JOptionPane.ERROR_MESSAGE);
+    }
+}
 
     public void refrescarTabla() {
-        DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("ID");
-        model.addColumn("Nombre");
-        model.addColumn("NIT");
-        model.addColumn("Teléfono");
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID");
+    model.addColumn("Nombre");
+    model.addColumn("NIT");
+    model.addColumn("Teléfono");
 
-     List<Cliente> clientes = controller.getClientes();
-        for (Cliente c : clientes) {
-            Object[] fila = new Object[4];
-            fila[0] = c.getIdCliente();
-            fila[1] = c.getNombres();
-            fila[2] = c.getApellidos();
-            fila[3] = c.getEmail();
-            model.addRow(fila);
-        }
-        jTable1.setModel(model);
+    List<Cliente> clientes = controller.getClientes();
+    for (Cliente c : clientes) {
+        Object[] fila = new Object[4];
+        fila[0] = c.getIdCliente();
+        fila[1] = c.getNombres();
+        fila[2] = c.getNumeroDocumento();
+        fila[3] = c.getTelefono();
+        model.addRow(fila);
     }
+    jTable1.setModel(model);
+}
 
     // Variables declaration - do not modify                     
     private javax.swing.JButton BtnGrabar;
