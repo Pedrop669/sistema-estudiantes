@@ -27,6 +27,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         desktopPane = new javax.swing.JDesktopPane();
+        jButton2 = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openMenuItem = new javax.swing.JMenuItem();
@@ -45,6 +46,11 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jButton2.setText("Proveedores");
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        desktopPane.add(jButton2);
+        jButton2.setBounds(0, 0, 100, 23);
 
         fileMenu.setMnemonic('f');
         fileMenu.setText("File");
@@ -157,6 +163,13 @@ frm.setVisible(true);        // TODO add your handling code here:
         frm.setVisible(true);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    FmrProveedor fmr = new FrmProveedor ();
+    desktopPane.add(frm);
+    frm.toFront();
+    fmr.setVisible(true);
+    }//GEN-LAST:event_jButton2ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -204,6 +217,7 @@ frm.setVisible(true);        // TODO add your handling code here:
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JButton jButton2;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openMenuItem;
