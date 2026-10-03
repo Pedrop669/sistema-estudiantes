@@ -1,7 +1,8 @@
 package gt.edu.umg.sistema.estudiantes.modelo;
 
 public class DetalleDespacho {
-
+    private Long idOrdenDespacho;
+    private Long idProducto;
     private Long idDetalleDespacho;
     private Integer cantidad;
     private String observaciones;
@@ -22,6 +23,22 @@ public class DetalleDespacho {
 
     public void setIdDetalleDespacho(Long idDetalleDespacho) {
         this.idDetalleDespacho = idDetalleDespacho;
+    }
+
+    public Long getIdOrdenDespacho() {
+        return idOrdenDespacho;
+    }
+
+    public void setIdOrdenDespacho(Long idOrdenDespacho) {
+        this.idOrdenDespacho = idOrdenDespacho;
+    }
+
+    public Long getIdProducto() {
+        return idProducto;
+    }
+
+    public void setIdProducto(Long idProducto) {
+        this.idProducto = idProducto;
     }
 
     public Integer getCantidad() {

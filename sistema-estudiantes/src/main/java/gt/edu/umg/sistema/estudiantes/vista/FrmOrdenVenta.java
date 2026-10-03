@@ -1,6 +1,7 @@
 package gt.edu.umg.sistema.estudiantes.vista;
 
 import gt.edu.umg.sistema.estudiantes.controlador.ClienteController;
+import gt.edu.umg.sistema.estudiantes.controlador.DespachoController;
 import gt.edu.umg.sistema.estudiantes.controlador.OrdenVentaController;
 import gt.edu.umg.sistema.estudiantes.controlador.ProductoController;
 import gt.edu.umg.sistema.estudiantes.controlador.VendedorController;
@@ -22,8 +23,7 @@ import javax.swing.table.DefaultTableModel;
 /**
  * Formulario de registro de Orden de Venta. Permite elegir cliente y
  * vendedor, agregar varios productos con cantidad, calcular el total y
- * guardar la venta. Al guardar, el stock de cada producto se descuenta
- * automaticamente (vía OrdenVentaController -> ProductoDAO.ajustarStock).
+ * guardar la venta.
  *
  * @author Daniel
  */
@@ -36,6 +36,7 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
     VendedorController vendedorController = new VendedorController();
     ProductoController productoController = new ProductoController();
     OrdenVentaController ordenVentaController = new OrdenVentaController();
+    DespachoController despachoController = new DespachoController();
 
     // listas paralelas a los combos, para mapear el indice seleccionado
     // con el objeto real (Cliente / Vendedor / Producto)
@@ -47,6 +48,9 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
     private List<DetalleOrdenVenta> detalles = new ArrayList<>();
     private BigDecimal total = BigDecimal.ZERO;
 
+    // id de la ultima orden guardada, para poder confirmarla despues
+    private Long idUltimaOrdenGuardada = null;
+
     /**
      * Creates new form FrmOrdenVenta
      */
@@ -54,6 +58,7 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
         initComponents();
         cargarCombos();
         prepararTablaDetalle();
+        btnConfirmarOrden.setEnabled(false);
     }
 
     // ================= carga inicial =================
@@ -95,7 +100,7 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">
     private void initComponents() {
 
         lblCliente = new javax.swing.JLabel();
@@ -111,6 +116,8 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
         jTable1 = new javax.swing.JTable();
         lblTotal = new javax.swing.JLabel();
         btnGuardar = new javax.swing.JButton();
+        btnConfirmarOrden = new javax.swing.JButton();
+        lblEstadoOrden = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -137,6 +144,11 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
 
         btnGuardar.setText("Guardar Venta");
         btnGuardar.addActionListener(this::btnGuardarActionPerformed);
+
+        btnConfirmarOrden.setText("Confirmar Orden (generar despacho)");
+        btnConfirmarOrden.addActionListener(this::btnConfirmarOrdenActionPerformed);
+
+        lblEstadoOrden.setText(" ");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -165,7 +177,11 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
                         .addComponent(btnAgregar))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 600, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTotal)
-                    .addComponent(btnGuardar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnConfirmarOrden))
+                    .addComponent(lblEstadoOrden))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -189,12 +205,16 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTotal)
                 .addGap(10, 10, 10)
-                .addComponent(btnGuardar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGuardar)
+                    .addComponent(btnConfirmarOrden))
+                .addGap(10, 10, 10)
+                .addComponent(lblEstadoOrden)
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
-    }// </editor-fold>//GEN-END:initComponents
+    }// </editor-fold>
 
     // ================= acciones =================
 
@@ -287,20 +307,19 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
             orden.setIdCliente(cliente.getIdCliente());
             orden.setIdVendedor(vendedor.getIdVendedor());
 
-            // guarda la orden + detalles, y descuenta el stock de cada
-            // producto automáticamente (dentro de OrdenVentaController/DAO)
+            // guarda la orden + detalles. YA NO toca el inventario aqui:
+            // eso pasa hasta que se confirme el despacho.
             ordenVentaController.guardar(orden, detalles);
 
-            JOptionPane.showMessageDialog(this, "Venta registrada con éxito.");
+            idUltimaOrdenGuardada = orden.getIdOrdenVenta();
 
-            // limpiar formulario para una nueva venta
-            detalles.clear();
-            total = BigDecimal.ZERO;
-            lblTotal.setText("Total: Q 0.00");
-            ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
+            JOptionPane.showMessageDialog(this,
+                    "Orden de venta #" + idUltimaOrdenGuardada + " registrada.\n"
+                    + "Ahora puedes presionar \"Confirmar Orden\" para generar el despacho.");
 
-            // recargar combos: el stock de los productos cambió
-            cargarCombos();
+            lblEstadoOrden.setText("Orden #" + idUltimaOrdenGuardada + " guardada (REGISTRADA) — pendiente de confirmar");
+            btnConfirmarOrden.setEnabled(true);
+            btnGuardar.setEnabled(false);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, "Error al guardar la venta: " + e.getMessage(),
@@ -308,8 +327,43 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
         }
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private void btnConfirmarOrdenActionPerformed(java.awt.event.ActionEvent evt) {
+        if (idUltimaOrdenGuardada == null) {
+            JOptionPane.showMessageDialog(this, "Primero guarda una orden de venta.",
+                    "Sin orden", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        try {
+            despachoController.generarDespacho(idUltimaOrdenGuardada);
+
+            JOptionPane.showMessageDialog(this,
+                    "Orden confirmada. Se generó la orden de despacho correspondiente.\n"
+                    + "Ve al módulo de Despacho para confirmarla y descontar inventario.");
+
+            lblEstadoOrden.setText("Orden #" + idUltimaOrdenGuardada + " APROBADA — despacho generado");
+            btnConfirmarOrden.setEnabled(false);
+
+            detalles.clear();
+            total = BigDecimal.ZERO;
+            lblTotal.setText("Total: Q 0.00");
+            ((DefaultTableModel) jTable1.getModel()).setRowCount(0);
+            idUltimaOrdenGuardada = null;
+            btnGuardar.setEnabled(true);
+
+            // recargar combos por si acaso (el stock aun no cambia aqui,
+            // pero mantiene todo consistente)
+            cargarCombos();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al confirmar la orden: " + e.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    // Variables declaration - do not modify
     private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnConfirmarOrden;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JComboBox<String> cmbCliente;
     private javax.swing.JComboBox<String> cmbProducto;
@@ -318,9 +372,10 @@ public class FrmOrdenVenta extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCantidad;
     private javax.swing.JLabel lblCliente;
+    private javax.swing.JLabel lblEstadoOrden;
     private javax.swing.JLabel lblProducto;
     private javax.swing.JLabel lblTotal;
     private javax.swing.JLabel lblVendedor;
     private javax.swing.JTextField txtCantidad;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration
 }

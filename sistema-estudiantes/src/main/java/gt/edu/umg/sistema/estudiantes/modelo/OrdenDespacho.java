@@ -3,7 +3,7 @@ package gt.edu.umg.sistema.estudiantes.modelo;
 import java.time.LocalDateTime;
 
 public class OrdenDespacho {
-
+    private Long idOrdenVenta;
     private Long idOrdenDespacho;
     private LocalDateTime fecha;
     private EstadoDespacho estado;
@@ -22,6 +22,14 @@ public class OrdenDespacho {
 
     public void cambiarEstado() {
     }
+    
+    public Long getIdOrdenVenta() {
+        return idOrdenVenta;
+    }
+
+    public void setIdOrdenVenta(Long idOrdenVenta) {
+        this.idOrdenVenta = idOrdenVenta;
+    }   
 
     public Long getIdOrdenDespacho() {
         return idOrdenDespacho;

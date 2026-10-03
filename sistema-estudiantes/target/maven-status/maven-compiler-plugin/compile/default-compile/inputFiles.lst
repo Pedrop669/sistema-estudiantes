@@ -1,6 +1,8 @@
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\ClienteController.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\CompraController.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\DespachoController.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\EstudianteController.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\FacturaController.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\OrdenVentaController.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\ProductoController.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\controlador\ProveedorController.java
@@ -9,8 +11,12 @@ C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\ClienteDAOImpl.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\CompraDAO.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\CompraDAOImpl.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\DespachoDAO.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\DespachoDAOImpl.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\EstudianteDAO.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\EstudianteDAOImpl.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\FacturaDAO.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\FacturaDAOImpl.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\OrdenVentaDAO.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\OrdenVentaDAOImpl.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\dao\ProductoDAO.java
@@ -32,6 +38,7 @@ C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\Estudiante.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\FACTURA.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\FacturaDetalle.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\FacturaVenta.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\MovimientoInventario.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\OrdenDespacho.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\modelo\OrdenVenta.java
@@ -51,4 +58,5 @@ C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\vista\FrmMenuPrincipal.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\vista\FrmOrdenVenta.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\vista\FrmProducto.java
+C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\vista\FrmProveedor.java
 C:\Users\Daniel\Documents\sistema-estudiantes\sistema-estudiantes\src\main\java\gt\edu\umg\sistema\estudiantes\vista\FrmVendedor.java

@@ -31,7 +31,7 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
             }
             o.setIdOrdenVenta(idOrden);
 
-            // 2. insertar detalles y descontar stock, TODO en la MISMA conexion/transaccion
+            // 2. insertar detalles y descontar stock
             ProductoDAOImpl prodDAO = new ProductoDAOImpl();
             for (DetalleOrdenVenta d : detalles) {
                 try (PreparedStatement ps = con.prepareStatement(sqlDet)) {
@@ -43,10 +43,6 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
                     ps.setBigDecimal(6, d.getSubtotal());
                     ps.executeUpdate();
                 }
-                // descontar stock y registrar movimiento, usando la MISMA "con"
-                // (evita el bloqueo cruzado entre dos conexiones distintas)
-                prodDAO.ajustarStock(con, d.getIdProducto().intValue(), TipoMovimiento.VENTA,
-                        d.getCantidad(), idOrden, "ORDEN_VENTA", "Venta orden #" + idOrden);
             }
             con.commit();
         } catch (Exception e) {
@@ -54,6 +50,18 @@ public class OrdenVentaDAOImpl implements OrdenVentaDAO {
             throw new RuntimeException("Error al guardar orden de venta: " + e.getMessage(), e);
         } finally {
             if (con != null) try { con.setAutoCommit(true); con.close(); } catch (SQLException e) { }
+        }
+    }
+
+    public void cambiarEstado(long idOrdenVenta, EstadoOrdenVenta nuevoEstado) {
+        String sql = "UPDATE orden_venta SET estado=? WHERE id_orden_venta=?";
+        try (Connection con = ConexionBD.getConexion();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, nuevoEstado.name());
+            ps.setLong(2, idOrdenVenta);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al cambiar estado de orden: " + e.getMessage(), e);
         }
     }
 

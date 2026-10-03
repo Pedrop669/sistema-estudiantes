@@ -39,6 +39,8 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         mnuProductos = new javax.swing.JMenuItem();
         mnuVentas = new javax.swing.JMenuItem();
+        mnuProveedores = new javax.swing.JMenuItem();
+        mnuCompras = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -88,6 +90,14 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuVentas.setText("Ventas");
         mnuVentas.addActionListener(this::mnuVentasActionPerformed);
         fileMenu.add(mnuVentas);
+
+        mnuProveedores.setText("Proveedores");
+        mnuProveedores.addActionListener(this::mnuProveedoresActionPerformed);
+        fileMenu.add(mnuProveedores);
+
+        mnuCompras.setText("Compras");
+        mnuCompras.addActionListener(this::mnuComprasActionPerformed);
+        fileMenu.add(mnuCompras);
 
         menuBar.add(fileMenu);
 
@@ -185,6 +195,22 @@ frm.setVisible(true);        // TODO add your handling code here:
         frm.setVisible(true);
     }//GEN-LAST:event_mnuVentasActionPerformed
 
+    private void mnuProveedoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuProveedoresActionPerformed
+        // TODO add your handling code here:
+        FrmProveedor frm = new FrmProveedor();
+        desktopPane.add(frm);
+        frm.toFront();
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuProveedoresActionPerformed
+
+    private void mnuComprasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuComprasActionPerformed
+        // TODO add your handling code here:
+        FrmCompra frm = new FrmCompra();
+        desktopPane.add(frm);
+        frm.toFront();
+        frm.setVisible(true);
+    }//GEN-LAST:event_mnuComprasActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -234,7 +260,9 @@ frm.setVisible(true);        // TODO add your handling code here:
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
+    private javax.swing.JMenuItem mnuCompras;
     private javax.swing.JMenuItem mnuProductos;
+    private javax.swing.JMenuItem mnuProveedores;
     private javax.swing.JMenuItem mnuVentas;
     private javax.swing.JMenuItem openMenuItem;
     private javax.swing.JMenuItem pasteMenuItem;
