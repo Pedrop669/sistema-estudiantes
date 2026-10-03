@@ -41,6 +41,7 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuVentas = new javax.swing.JMenuItem();
         mnuProveedores = new javax.swing.JMenuItem();
         mnuCompras = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         cutMenuItem = new javax.swing.JMenuItem();
         copyMenuItem = new javax.swing.JMenuItem();
@@ -98,6 +99,10 @@ public class FrmMenuPrincipal extends javax.swing.JFrame {
         mnuCompras.setText("Compras");
         mnuCompras.addActionListener(this::mnuComprasActionPerformed);
         fileMenu.add(mnuCompras);
+
+        jMenuItem1.setText("Despacho");
+        jMenuItem1.addActionListener(this::jMenuItem1ActionPerformed);
+        fileMenu.add(jMenuItem1);
 
         menuBar.add(fileMenu);
 
@@ -211,6 +216,14 @@ frm.setVisible(true);        // TODO add your handling code here:
         frm.setVisible(true);
     }//GEN-LAST:event_mnuComprasActionPerformed
 
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        FrmDespacho frm = new FrmDespacho();
+desktopPane.add(frm);
+frm.toFront();
+frm.setVisible(true);
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -258,6 +271,7 @@ frm.setVisible(true);        // TODO add your handling code here:
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem mnuCompras;
