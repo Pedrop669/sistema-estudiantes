@@ -1,30 +1,28 @@
+
 package gt.edu.umg.sistema.estudiantes.vista;
 
 import gt.edu.umg.sistema.estudiantes.controlador.ClienteController;
 import gt.edu.umg.sistema.estudiantes.modelo.Cliente;
+
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
-/**
- * @author jennifergalicia
- */
 public class FrmCliente extends javax.swing.JInternalFrame {
 
-    ClienteController controller = new ClienteController();
+    private final ClienteController controller = new ClienteController();
 
-    /**
-     * Creates new form FrmCliente
-     */
     public FrmCliente() {
         initComponents();
+        txtId.setEditable(false);
         refrescarTabla();
     }
 
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
-
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
@@ -43,132 +41,170 @@ public class FrmCliente extends javax.swing.JInternalFrame {
         setResizable(true);
         setTitle("Gestión de Clientes");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {},
-            new String [] {"ID", "Nombre", "NIT", "Teléfono"}
+        jTable1.setModel(new DefaultTableModel(
+            new Object[][] {},
+            new String[] {"ID", "Nombre", "NIT", "Teléfonos"}
         ));
         jScrollPane1.setViewportView(jTable1);
 
         jLabel1.setText("ID");
         lblNombre.setText("Nombre");
         lblNit.setText("NIT");
-        lblTelefono.setText("Teléfono");
+        lblTelefono.setText("Teléfonos (separados por coma)");
 
         BtnGrabar.setText("Grabar");
         BtnGrabar.addActionListener(this::BtnGrabarActionPerformed);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        javax.swing.GroupLayout layout =
+            new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
+
         layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(lblNombre)
-                            .addComponent(lblNit)
-                            .addComponent(lblTelefono))
-                        .addGap(30, 30, 30)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre)
-                            .addComponent(txtNit)
-                            .addComponent(txtTelefono)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BtnGrabar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap(20, Short.MAX_VALUE))
+            layout.createParallelGroup(
+                javax.swing.GroupLayout.Alignment.LEADING
+            ).addGroup(layout.createSequentialGroup()
+                .addGap(20)
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.LEADING
+                ).addComponent(jScrollPane1, 650, 650, Short.MAX_VALUE)
+                .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(
+                        javax.swing.GroupLayout.Alignment.LEADING
+                    ).addComponent(jLabel1)
+                     .addComponent(lblNombre)
+                     .addComponent(lblNit)
+                     .addComponent(lblTelefono))
+                    .addGap(25)
+                    .addGroup(layout.createParallelGroup(
+                        javax.swing.GroupLayout.Alignment.LEADING
+                    ).addComponent(txtId, 100, 100, 100)
+                     .addComponent(txtNombre)
+                     .addComponent(txtNit)
+                     .addComponent(txtTelefono)
+                     .addComponent(BtnGrabar, 110, 110, 110))))
+                .addGap(20))
         );
+
         layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNit)
-                    .addComponent(txtNit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTelefono)
-                    .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+            layout.createSequentialGroup()
+                .addGap(20)
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                ).addComponent(jLabel1).addComponent(txtId,
+                    javax.swing.GroupLayout.PREFERRED_SIZE,
+                    javax.swing.GroupLayout.DEFAULT_SIZE,
+                    javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12)
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                ).addComponent(lblNombre).addComponent(txtNombre,
+                    javax.swing.GroupLayout.PREFERRED_SIZE,
+                    javax.swing.GroupLayout.DEFAULT_SIZE,
+                    javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12)
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                ).addComponent(lblNit).addComponent(txtNit,
+                    javax.swing.GroupLayout.PREFERRED_SIZE,
+                    javax.swing.GroupLayout.DEFAULT_SIZE,
+                    javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(12)
+                .addGroup(layout.createParallelGroup(
+                    javax.swing.GroupLayout.Alignment.BASELINE
+                ).addComponent(lblTelefono).addComponent(txtTelefono,
+                    javax.swing.GroupLayout.PREFERRED_SIZE,
+                    javax.swing.GroupLayout.DEFAULT_SIZE,
+                    javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18)
                 .addComponent(BtnGrabar)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(18)
+                .addComponent(jScrollPane1, 220, 220, Short.MAX_VALUE)
+                .addGap(20)
         );
 
         pack();
-    }// </editor-fold>                        
+    }
 
     private void BtnGrabarActionPerformed(java.awt.event.ActionEvent evt) {
-    try {
-        Cliente cliente = new Cliente();
+        try {
+            String nombre = txtNombre.getText().trim();
+            String nit = txtNit.getText().trim();
+            String entrada = txtTelefono.getText().trim();
 
-        if (!txtId.getText().trim().isEmpty()) {
-            cliente.setIdCliente(Long.parseLong(txtId.getText().trim()));
+            if (nombre.isEmpty() || nit.isEmpty()) {
+                JOptionPane.showMessageDialog(this,
+                    "Ingresa el nombre y el NIT.");
+                return;
+            }
+
+            List<String> telefonos = Arrays.stream(entrada.split(","))
+                .map(String::trim)
+                .filter(t -> !t.isEmpty())
+                .distinct()
+                .collect(Collectors.toList());
+
+            Cliente cliente = new Cliente();
+            cliente.setTipoDocumento("NIT");
+            cliente.setNumeroDocumento(nit);
+            cliente.setNombres(nombre);
+            cliente.setApellidos("");
+            cliente.setCodigoCliente(nit);
+            cliente.setLimiteCredito(BigDecimal.ZERO);
+            cliente.setActivo(true);
+            cliente.setTelefonos(telefonos);
+            cliente.setTelefono(
+                telefonos.isEmpty() ? "" : telefonos.get(0)
+            );
+
+            controller.guardar(cliente);
+
+            JOptionPane.showMessageDialog(this,
+                "Cliente y teléfonos guardados correctamente.");
+
+            txtId.setText("");
+            txtNombre.setText("");
+            txtNit.setText("");
+            txtTelefono.setText("");
+            refrescarTabla();
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this,
+                "Error al guardar: " + e.getMessage(),
+                "Error", JOptionPane.ERROR_MESSAGE);
         }
-        cliente.setTipoDocumento("NIT");
-        cliente.setNumeroDocumento(txtNit.getText().trim());
-        cliente.setNombres(txtNombre.getText().trim());
-        cliente.setApellidos(""); // el formulario no captura apellidos por ahora
-        cliente.setTelefono(txtTelefono.getText().trim());
-        cliente.setActivo(true);
-
-        controller.guardar(cliente);
-
-        JOptionPane.showMessageDialog(this, "Cliente grabado con éxito.");
-
-        txtId.setText("");
-        txtNombre.setText("");
-        txtNit.setText("");
-        txtTelefono.setText("");
-
-        refrescarTabla();
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this,
-            "El campo ID debe ser numérico.",
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this,
-            "Error al guardar: " + e.getMessage(),
-            "Error",
-            JOptionPane.ERROR_MESSAGE);
     }
-}
 
     public void refrescarTabla() {
-    DefaultTableModel model = new DefaultTableModel();
-    model.addColumn("ID");
-    model.addColumn("Nombre");
-    model.addColumn("NIT");
-    model.addColumn("Teléfono");
+        DefaultTableModel model = new DefaultTableModel(
+            new Object[][] {},
+            new String[] {"ID", "Nombre", "NIT", "Teléfonos"}
+        ) {
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
 
-    List<Cliente> clientes = controller.getClientes();
-    for (Cliente c : clientes) {
-        Object[] fila = new Object[4];
-        fila[0] = c.getIdCliente();
-        fila[1] = c.getNombres();
-        fila[2] = c.getNumeroDocumento();
-        fila[3] = c.getTelefono();
-        model.addRow(fila);
+        List<Cliente> clientes = controller.getClientes();
+
+        for (Cliente c : clientes) {
+            String telefonos = String.join(", ", c.getTelefonos());
+
+            if (telefonos.isBlank() && c.getTelefono() != null) {
+                telefonos = c.getTelefono();
+            }
+
+            model.addRow(new Object[] {
+                c.getIdCliente(),
+                c.getNombres(),
+                c.getNumeroDocumento(),
+                telefonos
+            });
+        }
+
+        jTable1.setModel(model);
     }
-    jTable1.setModel(model);
-}
 
-    // Variables declaration - do not modify                     
     private javax.swing.JButton BtnGrabar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
@@ -180,5 +216,4 @@ public class FrmCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNit;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtTelefono;
-    // End of variables declaration                   
 }
